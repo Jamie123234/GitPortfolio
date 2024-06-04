@@ -17,8 +17,11 @@ def home_page(page_name):
 def submit_form():
     if request.method == 'POST':
         data = request.form.to_dict()
-        send_email(data)
-        return render_template('thankyou.html', name=data.get('name'))
+        if len(data.get('email')) > 0 and len(data.get('message')) > 0 and len(data.get('name')) > 0:
+            send_email(data)
+            return render_template('thankyou.html', name=data.get('name'))
+        else:
+            return render_template('incorrectdetails.html')
     else: return 'Something went wrong. Try again'
 
 def send_email(data):
