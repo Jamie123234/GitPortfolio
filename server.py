@@ -17,8 +17,11 @@ def home_page(page_name):
 def submit_form():
     if request.method == 'POST':
         data = request.form.to_dict()
-        send_email(data)
-        return render_template('thankyou.html', name=data.get('name'))
+        if len(data) > 0:
+            send_email(data)
+            return render_template('thankyou.html', name=data.get('name'))
+        else:
+            return
     else: return 'Something went wrong. Try again'
 
 def send_email(data):
@@ -30,7 +33,7 @@ def send_email(data):
     with SMTP('smtp.gmail.com', 587) as smtp:
         smtp.ehlo() 
         smtp.starttls() 
-        smtp.login('jamie.gaming123234@gmail.com','njqq yknm oqzq iteg')
+        smtp.login('pythonemailserver.smtp@gmail.com','iyzo jopq octf ojad')
         smtp.send_message(msg)
         try:
             write_to_file(data)
