@@ -16,12 +16,12 @@ def home_page(page_name):
 @app.route('/submit_form', methods=['POST', 'GET'])
 def submit_form():
     if request.method == 'POST':
-        data = request.form.to_dict()
-        if len(data) > 0:
+        if request.form.__len__ > 0:
+            data = request.form.to_dict()
             send_email(data)
             return render_template('thankyou.html', name=data.get('name'))
         else:
-            return
+            pass
     else: return 'Something went wrong. Try again'
 
 def send_email(data):
